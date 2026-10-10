@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: websupportplaza_app
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    environment:
+      APP_NAME: "Web Support Plaza"
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: "http://localhost:8000"
+      LOG_CHANNEL: stderr
+      DB_CONNECTION: sqlite
+      SESSION_DRIVER: file
+      CACHE_STORE: file
+    volumes:
+      - app_storage:/var/www/html/storage
+      - app_database:/var/www/html/database
+
+volumes:
+  app_storage:
+  app_database:

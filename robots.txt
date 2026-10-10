@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /index.php/
+Allow: /
+
+Sitemap: https://websupportplaza.com/sitemap_index.xml
