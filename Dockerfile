@@ -1,73 +1,60 @@
-# ==============================================================================
-# Web Support Plaza - Laravel Production Dockerfile (PHP 8.4 + Nginx + FPM)
-# ==============================================================================
-FROM php:8.4-fpm-alpine
+FROM php:8.4-cli-alpine AS base
 
-# Set working directory
-WORKDIR /var/www/html
-
-# Install system dependencies
 RUN apk add --no-cache \
-    nginx \
-    supervisor \
-    curl \
     bash \
+    curl \
+    git \
     libpng-dev \
     libjpeg-turbo-dev \
-    freetype-dev \
-    libzip-dev \
-    zip \
-    unzip \
+    libwebp-dev \
+    libxml2-dev \
     icu-dev \
     oniguruma-dev \
-    sqlite-dev
+    openssl-dev \
+    sqlite-dev \
+    zip \
+    unzip \
+    nodejs \
+    npm \
+    $PHPIZE_DEPS
 
-# Configure & install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+RUN docker-php-ext-configure gd --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) \
+        bcmath \
+        dom \
+        fileinfo \
+        gd \
+        intl \
+        mbstring \
+        pcntl \
         pdo \
         pdo_mysql \
         pdo_sqlite \
-        mbstring \
-        zip \
-        gd \
-        intl \
-        opcache \
-        bcmath
+        xml
 
-# Copy Composer binary from official image
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy composer files first to leverage Docker build cache
-COPY composer.json composer.lock* ./
+WORKDIR /app
 
-# Install Composer dependencies (production only, no dev packages)
-RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
+COPY composer.json composer.lock ./
+RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader --no-scripts
 
-# Copy the rest of the application
+COPY package.json package-lock.json* ./
+RUN npm install --prefer-offline 2>/dev/null || npm install
+
 COPY . .
 
-# Generate optimized autoloader
-RUN composer dump-autoload --optimize --no-dev
+RUN npm run build \
+    && composer run-script post-autoload-dump --no-interaction \
+    && touch database/database.sqlite \
+    && mkdir -p storage/logs storage/framework/cache storage/framework/sessions \
+        storage/framework/views bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
-# Copy configuration files
-COPY docker/nginx.conf /etc/nginx/http.d/default.conf
-COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY docker/php.ini /usr/local/etc/php/conf.d/custom.ini
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+EXPOSE 8000
 
-# Ensure proper permissions and file formats
-RUN chmod +x /usr/local/bin/entrypoint.sh \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Expose HTTP port
-EXPOSE 80
-
-# Healthcheck using Laravel's /up endpoint
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD curl -f http://127.0.0.1/up || exit 1
-
-# Define entrypoint and default command
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache \
+    && php artisan migrate --force \
+    && php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
