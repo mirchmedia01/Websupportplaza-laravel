@@ -63,6 +63,9 @@ Route::get('/sitemap_index.xml', fn () => redirect()->away('/sitemap.xml', 301))
 Route::get('/page-sitemap.xml', fn () => redirect()->away('/sitemap.xml', 301));
 
 // Fallback & Legacy WordPress Redirects
+Route::get('/wp-content/uploads/{path}', fn (string $path) => redirect()->away('/images/'.$path, 301))
+    ->where('path', '.*');
+
 Route::get('/index.php/{slug?}', function ($slug = null) {
     if (! $slug || $slug === 'home') {
         return redirect()->route('home', [], 301);
