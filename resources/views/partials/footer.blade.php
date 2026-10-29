@@ -27,7 +27,7 @@
                         </div>
                         <div>
                             <div style="font-size: 0.84rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Email Support</div>
-                            <a href="mailto:info@websupportplaza.com" style="font-size: 1.2rem; font-weight: 800; color: var(--dark);">info@websupportplaza.com</a>
+                            <a href="mailto:marketing@mirchmedia.com" style="font-size: 1.2rem; font-weight: 800; color: var(--dark);">marketing@mirchmedia.com</a>
                         </div>
                     </div>
 
@@ -263,7 +263,7 @@
                         </div>
                         <div class="wsp-footer-contact-info">
                             <span class="wsp-footer-contact-label">Email Support</span>
-                            <a href="mailto:info@websupportplaza.com" class="wsp-footer-contact-value">info@websupportplaza.com</a>
+                            <a href="mailto:marketing@mirchmedia.com" class="wsp-footer-contact-value">marketing@mirchmedia.com</a>
                             <span class="wsp-footer-contact-sub">Guaranteed 24h Response</span>
                         </div>
                     </div>

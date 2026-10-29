@@ -6,6 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#0ea5e9">
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2KVN5343CW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-2KVN5343CW');
+    </script>
+
     <!-- SEO Meta Tags -->
     <title>{{ $title ?? 'Web Support Plaza | Web Design & Digital Marketing Agency | Queens NY' }}</title>
     <meta name="description" content="{{ $metaDescription ?? 'Web Support Plaza is a Queens NY digital marketing agency offering web design, SEO & local marketing.' }}">

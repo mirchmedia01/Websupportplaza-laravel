@@ -22,6 +22,11 @@ return [
         'key' => env('RESEND_API_KEY'),
     ],
 
+    'contact' => [
+        'to_address' => env('CONTACT_TO_ADDRESS', 'marketing@mirchmedia.com'),
+        'from_address' => env('CONTACT_FROM_ADDRESS', 'noreply@mail.sprintmediadesign.com'),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

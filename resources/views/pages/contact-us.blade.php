@@ -57,7 +57,7 @@
                 </div>
                 <h3 class="wsp-card-title">Email to Schedule</h3>
                 <p class="wsp-card-text">We respond within 24 business hours</p>
-                <a href="mailto:info@websupportplaza.com" class="wsp-btn wsp-btn-outline wsp-btn-sm">info@websupportplaza.com</a>
+                <a href="mailto:marketing@mirchmedia.com" class="wsp-btn wsp-btn-outline wsp-btn-sm">marketing@mirchmedia.com</a>
             </div>
 
             <div class="wsp-card" style="text-align: center; align-items: center;">
@@ -81,7 +81,7 @@
                 <h2 class="wsp-section-title">Fill out the form and we'll get back to you <span class="highlight">within 24 business hours.</span></h2>
                 <p style="margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.7;">
                     <strong>Office Location:</strong> Forest Hills, Queens, New York, NY 11375<br>
-                    <strong>Email:</strong> <a href="mailto:info@websupportplaza.com" style="color: var(--primary);">info@websupportplaza.com</a><br>
+                    <strong>Email:</strong> <a href="mailto:marketing@mirchmedia.com" style="color: var(--primary);">marketing@mirchmedia.com</a><br>
                     <strong>Phone:</strong> <a href="tel:+(855)506-4724" style="color: var(--primary);">(855) 506-4724</a><br>
                     <strong>Business Hours:</strong> Mon – Fri: 9:00 AM – 6:00 PM EST (Sat – Sun: Closed)
                 </p>
@@ -268,7 +268,7 @@
                     </span>
                 </button>
                 <div class="wsp-faq-answer">
-                    <p>Call us at (855) 506-4724, email info@websupportplaza.com, or book a free strategy session on our calendar. We’re based in Forest Hills, Queens, NY and serve clients throughout the tri-state area and nationally.</p>
+                    <p>Call us at (855) 506-4724, email marketing@mirchmedia.com, or book a free strategy session on our calendar. We’re based in Forest Hills, Queens, NY and serve clients throughout the tri-state area and nationally.</p>
                 </div>
             </div>
 

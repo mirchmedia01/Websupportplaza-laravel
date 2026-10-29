@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactInquiryMail;
 use App\Models\Inquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -49,6 +52,15 @@ class ContactController extends Controller
             'page_source' => $pageSource,
             'ip_address' => $request->ip(),
         ]);
+
+        try {
+            Mail::to(config('services.contact.to_address'))->send(new ContactInquiryMail($inquiry));
+        } catch (\Throwable $e) {
+            Log::error('Contact inquiry email failed', [
+                'inquiry_id' => $inquiry->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([

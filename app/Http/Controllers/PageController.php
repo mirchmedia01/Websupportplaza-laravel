@@ -40,7 +40,7 @@ class PageController extends Controller
     {
         return view('pages.contact-us', [
             'title' => 'Contact Web Support Plaza | Queens NY Digital Marketing Agency - Web Support Plaza',
-            'metaDescription' => 'Contact Web Support Plaza in Queens, NY. Call (855) 506-4724, email info@websupportplaza.com, or book a free 30-minute strategy session. Forest Hills, Queens, NY.',
+            'metaDescription' => 'Contact Web Support Plaza in Queens, NY. Call (855) 506-4724, email marketing@mirchmedia.com, or book a free 30-minute strategy session. Forest Hills, Queens, NY.',
         ]);
     }
 
