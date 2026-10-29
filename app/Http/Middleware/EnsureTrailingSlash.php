@@ -43,7 +43,7 @@ class EnsureTrailingSlash
         }
 
         $queryString = $request->getQueryString();
-        $target = $request->root().$path.'/'.($queryString ? '?'.$queryString : '');
+        $target = rtrim(url('/'), '/').$path.'/'.($queryString ? '?'.$queryString : '');
 
         return redirect()->to($target, 301);
     }
