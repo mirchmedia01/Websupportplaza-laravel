@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 // Primary Pages
 Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/home', fn () => redirect()->away('/', 301));
 Route::get('/about-us', [PageController::class, 'about'])->name('about');
 Route::get('/services', [PageController::class, 'services'])->name('services');
 Route::get('/how-it-works', [PageController::class, 'howItWorks'])->name('how-it-works');

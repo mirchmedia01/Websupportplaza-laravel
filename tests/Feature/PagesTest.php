@@ -140,6 +140,14 @@ class PagesTest extends TestCase
         ];
     }
 
+    public function test_legacy_home_alias_redirects(): void
+    {
+        $response = $this->get('/home');
+
+        $response->assertStatus(301);
+        $this->assertSame('/', $response->headers->get('Location'));
+    }
+
     public function test_legacy_wordpress_uploads_redirect_to_images(): void
     {
         $response = $this->get('/wp-content/uploads/2025/05/web-support-plaza-logo-300x65.png');
