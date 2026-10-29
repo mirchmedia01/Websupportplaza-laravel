@@ -122,6 +122,24 @@ class PagesTest extends TestCase
         ];
     }
 
+    #[DataProvider('legacyIndexPhpProvider')]
+    public function test_legacy_index_php_urls_redirect(string $from, string $to): void
+    {
+        $response = $this->get($from);
+
+        $response->assertStatus(301);
+        $this->assertSame($to, $response->headers->get('Location'));
+    }
+
+    public static function legacyIndexPhpProvider(): array
+    {
+        return [
+            ['/index.php', 'http://localhost/'],
+            ['/index.php/home', 'http://localhost/'],
+            ['/index.php/about-us', 'http://localhost/about-us/'],
+        ];
+    }
+
     public function test_legacy_wordpress_uploads_redirect_to_images(): void
     {
         $response = $this->get('/wp-content/uploads/2025/05/web-support-plaza-logo-300x65.png');

@@ -66,10 +66,5 @@ Route::get('/page-sitemap.xml', fn () => redirect()->away('/sitemap.xml', 301));
 Route::get('/wp-content/uploads/{path}', fn (string $path) => redirect()->away('/images/'.$path, 301))
     ->where('path', '.*');
 
-Route::get('/index.php/{slug?}', function ($slug = null) {
-    if (! $slug || $slug === 'home') {
-        return redirect()->route('home', [], 301);
-    }
-
-    return redirect('/'.trim($slug, '/'), 301);
-})->where('slug', '.*');
+// Matched only so the web middleware can normalize /index.php/... URLs.
+Route::get('/index.php/{slug?}', fn () => abort(404))->where('slug', '.*');

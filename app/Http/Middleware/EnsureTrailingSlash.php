@@ -22,6 +22,21 @@ class EnsureTrailingSlash
         $rawUri = $request->getRequestUri();
         $path = explode('?', $rawUri)[0];
 
+        // Normalize legacy WordPress front-controller URLs (/index.php/...).
+        // The web server strips index.php from the routed path, so handle it
+        // before the trailing-slash redirect builds a URL from the raw URI.
+        if ($path === '/index.php' || str_starts_with($path, '/index.php/')) {
+            $slug = trim(substr($path, strlen('/index.php')), '/');
+            $targetPath = $slug === '' || $slug === 'home' ? '/' : '/'.$slug.'/';
+            $queryString = $request->getQueryString();
+            $scheme = app()->environment('production') ? 'https' : $request->getScheme();
+
+            return redirect()->to(
+                $scheme.'://'.$request->getHttpHost().$targetPath.($queryString ? '?'.$queryString : ''),
+                301,
+            );
+        }
+
         // Skip root URL
         if ($path === '/' || $path === '') {
             return $next($request);
