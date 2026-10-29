@@ -76,7 +76,10 @@ class PagesTest extends TestCase
     #[DataProvider('legacyRedirectProvider')]
     public function test_legacy_urls_redirect_permanently(string $from, string $to): void
     {
-        $this->get($from.'/')->assertStatus(301)->assertRedirect($to);
+        $response = $this->get($from.'/');
+
+        $response->assertStatus(301);
+        $this->assertSame($to, $response->headers->get('Location'));
     }
 
     public static function legacyRedirectProvider(): array

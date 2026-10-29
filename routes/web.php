@@ -21,7 +21,7 @@ Route::get('/contact-us', [PageController::class, 'contact'])->name('contact');
 Route::get('/custom-web-design', [PageController::class, 'customWebDesign'])->name('custom-web-design');
 Route::get('/construction-web-design', [PageController::class, 'constructionWebDesign'])->name('construction-web-design');
 Route::get('/real-estate-web-design', [PageController::class, 'realEstateWebDesign'])->name('real-estate-web-design');
-Route::redirect('/restaurant-web-design', '/custom-web-design/', 301);
+Route::get('/restaurant-web-design', fn () => redirect()->away('/custom-web-design/', 301));
 Route::get('/website-development', [PageController::class, 'websiteDevelopment'])->name('website-development');
 Route::get('/web-portals', [PageController::class, 'webPortals'])->name('web-portals');
 Route::get('/website-packages', [PageController::class, 'websitePackages'])->name('website-packages');
@@ -31,12 +31,12 @@ Route::get('/digital-marketing', [PageController::class, 'digitalMarketing'])->n
 Route::get('/search-engine-optimization-organic-reach', [PageController::class, 'searchEngineOptimizationOrganicReach'])->name('search-engine-optimization-organic-reach');
 Route::get('/local-seo', [PageController::class, 'localSeo'])->name('local-seo');
 Route::get('/google-business-profile-management', [PageController::class, 'googleBusinessProfileManagement'])->name('google-business-profile-management');
-Route::redirect('/gbp-management', '/google-business-profile-management/', 301);
+Route::get('/gbp-management', fn () => redirect()->away('/google-business-profile-management/', 301));
 Route::get('/pay-per-click-ads', [PageController::class, 'payPerClickAds'])->name('pay-per-click-ads');
 Route::get('/seo-packages', [PageController::class, 'seoPackages'])->name('seo-packages');
 
 // Service Pages - Social Media
-Route::redirect('/social-media-marketing', '/social-media-marketing-services/', 301);
+Route::get('/social-media-marketing', fn () => redirect()->away('/social-media-marketing-services/', 301));
 Route::get('/social-media-marketing-services', [PageController::class, 'socialMediaMarketingServices'])->name('social-media-marketing-services');
 Route::get('/social-media-packages', [PageController::class, 'socialMediaPackages'])->name('social-media-packages');
 
@@ -49,8 +49,8 @@ Route::get('/banners', [PageController::class, 'banners'])->name('banners');
 Route::get('/e-newsletter-design', [PageController::class, 'eNewsletterDesign'])->name('e-newsletter-design');
 
 // Service Pages - Mobile
-Route::redirect('/mobile-application', '/mobile-app-development/', 301);
-Route::redirect('/mobile-marketing', '/digital-marketing/', 301);
+Route::get('/mobile-application', fn () => redirect()->away('/mobile-app-development/', 301));
+Route::get('/mobile-marketing', fn () => redirect()->away('/digital-marketing/', 301));
 Route::get('/mobile-app-development', [PageController::class, 'mobileAppDevelopment'])->name('mobile-app-development');
 
 // Contact / Inquiry Submission
