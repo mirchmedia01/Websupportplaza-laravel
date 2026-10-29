@@ -59,10 +59,8 @@ class PagesTest extends TestCase
             ['search-engine-optimization-organic-reach', 'SEO'],
             ['local-seo', 'Local'],
             ['google-business-profile-management', 'Google Business Profile'],
-            ['gbp-management', 'Google Business Profile'],
             ['pay-per-click-ads', 'Pay-Per-Click'],
             ['seo-packages', 'SEO Packages'],
-            ['social-media-marketing', 'Social Media'],
             ['social-media-marketing-services', 'Social Media'],
             ['social-media-packages', 'Social Media Packages'],
             ['branding', 'Branding'],
@@ -71,8 +69,24 @@ class PagesTest extends TestCase
             ['print-design', 'Print Design'],
             ['banners', 'Banner'],
             ['e-newsletter-design', 'E-Newsletter'],
-            ['mobile-application', 'Mobile App'],
             ['mobile-app-development', 'Mobile App'],
+        ];
+    }
+
+    #[DataProvider('legacyRedirectProvider')]
+    public function test_legacy_urls_redirect_permanently(string $from, string $to): void
+    {
+        $this->get($from.'/')->assertStatus(301)->assertRedirect($to);
+    }
+
+    public static function legacyRedirectProvider(): array
+    {
+        return [
+            ['/mobile-marketing', '/digital-marketing/'],
+            ['/restaurant-web-design', '/custom-web-design/'],
+            ['/social-media-marketing', '/social-media-marketing-services/'],
+            ['/mobile-application', '/mobile-app-development/'],
+            ['/gbp-management', '/google-business-profile-management/'],
         ];
     }
 

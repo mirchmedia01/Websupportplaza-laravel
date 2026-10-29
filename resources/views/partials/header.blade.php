@@ -61,7 +61,7 @@
                     <a href="{{ route('search-engine-optimization-organic-reach') }}/" class="wsp-dropdown-item">SEO Organic Reach</a>
                     <a href="{{ route('google-business-profile-management') }}/" class="wsp-dropdown-item">Google Business Profile</a>
                     <a href="{{ route('pay-per-click-ads') }}/" class="wsp-dropdown-item">Pay-Per-Click Ads</a>
-                    <a href="{{ route('social-media-marketing') }}/" class="wsp-dropdown-item">Social Media Marketing</a>
+                    <a href="{{ route('social-media-marketing-services') }}/" class="wsp-dropdown-item">Social Media Marketing</a>
                     <a href="{{ route('mobile-app-development') }}/" class="wsp-dropdown-item">Mobile App Development</a>
                     <a href="{{ route('branding') }}/" class="wsp-dropdown-item">Branding & Identity</a>
                 </div>
@@ -136,7 +136,7 @@
                     <a href="{{ route('search-engine-optimization-organic-reach') }}/" class="wsp-mobile-sublink">SEO Organic Reach</a>
                     <a href="{{ route('google-business-profile-management') }}/" class="wsp-mobile-sublink">Google Business Profile</a>
                     <a href="{{ route('pay-per-click-ads') }}/" class="wsp-mobile-sublink">Pay-Per-Click Ads</a>
-                    <a href="{{ route('social-media-marketing') }}/" class="wsp-mobile-sublink">Social Media Marketing</a>
+                    <a href="{{ route('social-media-marketing-services') }}/" class="wsp-mobile-sublink">Social Media Marketing</a>
                     <a href="{{ route('mobile-app-development') }}/" class="wsp-mobile-sublink">Mobile App Development</a>
                     <a href="{{ route('branding') }}/" class="wsp-mobile-sublink">Branding &amp; Identity</a>
                 </div>

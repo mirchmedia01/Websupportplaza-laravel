@@ -127,7 +127,7 @@
                 <p class="wsp-card-text">
                     An inactive social media page raises questions about whether your business is still operating. Web Support Plaza handles content creation, graphic design, scheduling, and performance tracking across your social platforms to keep your business visible and professional for customers who look you up before they call.
                 </p>
-                <a href="{{ route('social-media-marketing') }}" class="wsp-card-link">
+                <a href="{{ route('social-media-marketing-services') }}" class="wsp-card-link">
                     <span>Learn More</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>

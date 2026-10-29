@@ -225,7 +225,7 @@
                 <p class="wsp-card-text">
                     Your customers are on Instagram, Facebook, and TikTok. We create content that builds trust, drives engagement, and keeps your business visible in your neighborhood.
                 </p>
-                <a href="{{ route('social-media-marketing') }}" class="wsp-card-link">
+                <a href="{{ route('social-media-marketing-services') }}" class="wsp-card-link">
                     <span>Learn More</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
