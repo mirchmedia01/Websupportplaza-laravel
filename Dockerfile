@@ -56,7 +56,11 @@ EXPOSE 8000
 # CVE-2026-109619 interim mitigation (PHP security advisory 2026-10-20)
 RUN printf "session.upload_progress.enabled=0\n" > /usr/local/etc/php/conf.d/zz-upload-progress.ini
 
-CMD php artisan config:cache \
+# The SQLite database lives on a Railway volume mounted at /data so it
+# survives deploys. Create the file at boot (volume starts empty).
+CMD mkdir -p /data \
+    && touch /data/database.sqlite \
+    && php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache \
     && php artisan migrate --force \
