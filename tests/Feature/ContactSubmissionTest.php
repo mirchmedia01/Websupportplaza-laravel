@@ -34,4 +34,38 @@ class ContactSubmissionTest extends TestCase
                 && $mail->inquiry->email === 'jane@example.com';
         });
     }
+
+    public function test_contact_submission_rejects_letters_in_phone(): void
+    {
+        Mail::fake();
+
+        $response = $this->postJson(route('contact.submit'), [
+            'name' => 'Jane Doe',
+            'email' => 'jane@example.com',
+            'phone' => 'call me maybe',
+            'message' => 'Please contact me.',
+        ]);
+
+        $response->assertStatus(422)->assertJsonValidationErrors('phone');
+
+        Mail::assertNothingSent();
+        $this->assertDatabaseCount('inquiries', 0);
+    }
+
+    public function test_contact_submission_rejects_an_invalid_name(): void
+    {
+        Mail::fake();
+
+        $response = $this->postJson(route('contact.submit'), [
+            'name' => 'Jane 123',
+            'email' => 'jane@example.com',
+            'phone' => '(855) 506-4724',
+            'message' => 'Please contact me.',
+        ]);
+
+        $response->assertStatus(422)->assertJsonValidationErrors('name');
+
+        Mail::assertNothingSent();
+        $this->assertDatabaseCount('inquiries', 0);
+    }
 }

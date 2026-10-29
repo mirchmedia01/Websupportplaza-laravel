@@ -117,27 +117,33 @@
                 <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--dark);">Book a Free Strategy Session</h3>
                 <p style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.5rem;">Pick a 30-minute slot that works for you. We’ll discuss your business, your goals, and exactly what it would take to grow your online presence.</p>
 
-                @if(session('success'))
-                    <div style="background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; font-weight: 500;">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
                 <form action="{{ route('contact.submit') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="form_anchor" value="contact-form-section">
+
+                    @if ($errors->any() && old('form_anchor') === 'contact-form-section')
+                        <div class="wsp-alert wsp-alert-error" role="alert">
+                            <ul style="margin: 0; padding-left: 1.1rem;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="wsp-form-group">
                         <label for="contact-name" class="wsp-form-label">Full Name *</label>
-                        <input type="text" id="contact-name" name="name" class="wsp-form-input" placeholder="Enter Your Name" required value="{{ old('name') }}">
+                        <input type="text" id="contact-name" name="name" class="wsp-form-input" placeholder="Enter Your Name" required minlength="2" maxlength="255" value="{{ old('name') }}">
                     </div>
 
                     <div class="wsp-form-group">
                         <label for="contact-email" class="wsp-form-label">Email Address *</label>
-                        <input type="email" id="contact-email" name="email" class="wsp-form-input" placeholder="Enter Your Email Address" required value="{{ old('email') }}">
+                        <input type="email" id="contact-email" name="email" class="wsp-form-input" placeholder="Enter Your Email Address" required maxlength="255" value="{{ old('email') }}">
                     </div>
 
                     <div class="wsp-form-group">
                         <label for="contact-phone" class="wsp-form-label">Phone Number *</label>
-                        <input type="tel" id="contact-phone" name="phone" class="wsp-form-input" placeholder="Enter Your Phone Number" required value="{{ old('phone') }}">
+                        <input type="tel" id="contact-phone" name="phone" class="wsp-form-input" placeholder="Enter Your Phone Number" required inputmode="tel" pattern="[0-9+() .-]{7,30}" minlength="7" maxlength="30" title="Enter a valid phone number using digits, spaces, +, -, parentheses, or periods." value="{{ old('phone') }}">
                     </div>
 
                     <div class="wsp-form-group">
@@ -156,7 +162,7 @@
 
                     <div class="wsp-form-group">
                         <label for="contact-message" class="wsp-form-label">Message</label>
-                        <textarea id="contact-message" name="message" class="wsp-form-textarea" placeholder="Tell us about your business, current website, or goals..." rows="4">{{ old('message') }}</textarea>
+                        <textarea id="contact-message" name="message" class="wsp-form-textarea" placeholder="Tell us about your business, current website, or goals..." rows="4" maxlength="5000">{{ old('message') }}</textarea>
                     </div>
 
                     <button type="submit" class="wsp-btn wsp-btn-primary" style="width: 100%; justify-content: center;">

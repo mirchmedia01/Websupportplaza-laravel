@@ -45,7 +45,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 
     <!-- Site CSS -->
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ filemtime(public_path('css/site.css')) }}">
     @yield('page_css')
 </head>
 <body class="@yield('body_class', 'wsp-body')">
@@ -54,18 +54,20 @@
     @include('partials.header')
 
     <!-- Flash Notifications -->
-    @if(session('success'))
-        <div class="wsp-container" style="margin-top: 1.5rem;">
-            <div class="wsp-alert wsp-alert-success">
-                {{ session('success') }}
-            </div>
-        </div>
-    @endif
-    @if(session('error'))
-        <div class="wsp-container" style="margin-top: 1.5rem;">
-            <div class="wsp-alert wsp-alert-error">
-                {{ session('error') }}
-            </div>
+    @if(session('success') || session('error'))
+        <div class="wsp-flash-stack" aria-live="polite">
+            @if(session('success'))
+                <div class="wsp-flash wsp-flash-success" role="status">
+                    <span>{{ session('success') }}</span>
+                    <button type="button" class="wsp-flash-close" aria-label="Dismiss notification">&times;</button>
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="wsp-flash wsp-flash-error" role="alert">
+                    <span>{{ session('error') }}</span>
+                    <button type="button" class="wsp-flash-close" aria-label="Dismiss notification">&times;</button>
+                </div>
+            @endif
         </div>
     @endif
 
@@ -78,7 +80,7 @@
     @include('partials.footer')
 
     <!-- Site Vanilla Scripts -->
-    <script src="{{ asset('js/site.js') }}"></script>
+    <script src="{{ asset('js/site.js') }}?v={{ filemtime(public_path('js/site.js')) }}"></script>
     @yield('page_scripts')
 </body>
 </html>

@@ -33,14 +33,41 @@ class ContactController extends Controller
         $pageSource = $request->input('referer_title')
             ?? ($request->header('referer') ?? 'Website Form');
 
-        $validated = validator([
-            'email' => $email,
+        $name = is_string($name) ? trim($name) : $name;
+        $email = is_string($email) ? trim($email) : $email;
+        $phone = is_string($phone) ? trim($phone) : $phone;
+        $service = is_string($service) ? trim($service) : $service;
+        $message = is_string($message) ? trim($message) : $message;
+
+        validator([
             'name' => $name,
+            'email' => $email,
             'phone' => $phone,
+            'service' => $service,
+            'message' => $message,
         ], [
-            'email' => 'required|email|max:255',
-            'name' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:50',
+            'name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[\pL\pM\s\'.-]+$/u'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone' => [
+                'required',
+                'string',
+                'max:30',
+                function (string $attribute, mixed $value, \Closure $fail): void {
+                    if (! preg_match('/^[0-9+()\s.\-]+$/', (string) $value)) {
+                        $fail('Please enter a valid phone number (digits, spaces, +, -, parentheses, and periods only).');
+                    } elseif (strlen(preg_replace('/\D/', '', (string) $value)) < 7) {
+                        $fail('Please enter a phone number with at least 7 digits.');
+                    }
+                },
+            ],
+            'service' => ['nullable', 'string', 'max:255'],
+            'message' => ['nullable', 'string', 'max:5000'],
+        ], [
+            'name.required' => 'Please enter your name.',
+            'name.regex' => 'Please use letters, spaces, apostrophes, hyphens, or periods in your name.',
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'Please enter a valid email address.',
+            'phone.required' => 'Please enter your phone number.',
         ])->validate();
 
         $inquiry = Inquiry::create([
@@ -78,6 +105,17 @@ class ContactController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Thank you! Your message has been sent successfully. We will get in touch soon.');
+        $previous = url()->previous();
+        $redirect = parse_url($previous, PHP_URL_HOST) === $request->getHost() ? $previous : url('/');
+        $anchor = $request->input('form_anchor');
+
+        if (is_string($anchor) && preg_match('/^[a-z0-9-]+$/', $anchor)) {
+            $redirect .= '#'.$anchor;
+        }
+
+        return redirect()->to($redirect)->with(
+            'success',
+            'Thank you! Your message has been sent successfully. We will get back to you within 24 business hours.',
+        );
     }
 }

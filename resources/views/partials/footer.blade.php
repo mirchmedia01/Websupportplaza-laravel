@@ -53,19 +53,31 @@
 
                 <form action="{{ route('contact.submit') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="form_anchor" value="quote-section">
+
+                    @if ($errors->any() && old('form_anchor') === 'quote-section')
+                        <div class="wsp-alert wsp-alert-error" role="alert">
+                            <ul style="margin: 0; padding-left: 1.1rem;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="wsp-form-group">
                         <label for="footer-name" class="wsp-form-label">Full Name *</label>
-                        <input type="text" id="footer-name" name="name" class="wsp-form-input" placeholder="e.g. John Doe" required>
+                        <input type="text" id="footer-name" name="name" class="wsp-form-input" placeholder="e.g. John Doe" required minlength="2" maxlength="255" value="{{ old('name') }}">
                     </div>
 
                     <div class="wsp-form-group">
                         <label for="footer-email" class="wsp-form-label">Email Address *</label>
-                        <input type="email" id="footer-email" name="email" class="wsp-form-input" placeholder="e.g. john@example.com" required>
+                        <input type="email" id="footer-email" name="email" class="wsp-form-input" placeholder="e.g. john@example.com" required maxlength="255" value="{{ old('email') }}">
                     </div>
 
                     <div class="wsp-form-group">
                         <label for="footer-phone" class="wsp-form-label">Phone Number *</label>
-                        <input type="tel" id="footer-phone" name="phone" class="wsp-form-input" placeholder="e.g. (855) 506-4724" required>
+                        <input type="tel" id="footer-phone" name="phone" class="wsp-form-input" placeholder="e.g. (855) 506-4724" required inputmode="tel" pattern="[0-9+() .-]{7,30}" minlength="7" maxlength="30" title="Enter a valid phone number using digits, spaces, +, -, parentheses, or periods." value="{{ old('phone') }}">
                     </div>
 
                     <div class="wsp-form-group">
@@ -83,7 +95,7 @@
 
                     <div class="wsp-form-group">
                         <label for="footer-message" class="wsp-form-label">How can we help you?</label>
-                        <textarea id="footer-message" name="message" class="wsp-form-textarea" placeholder="Tell us about your project or goals..."></textarea>
+                        <textarea id="footer-message" name="message" class="wsp-form-textarea" placeholder="Tell us about your project or goals..." maxlength="5000">{{ old('message') }}</textarea>
                     </div>
 
                     <button type="submit" class="wsp-btn wsp-btn-primary" style="width: 100%;">

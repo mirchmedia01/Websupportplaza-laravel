@@ -163,4 +163,29 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // 6. Flash Toast Dismissal
+    document.querySelectorAll('.wsp-flash').forEach((flash) => {
+        const hide = () => {
+            flash.classList.add('is-hiding');
+            window.setTimeout(() => flash.remove(), 220);
+        };
+
+        const close = flash.querySelector('.wsp-flash-close');
+        if (close) {
+            close.addEventListener('click', hide);
+        }
+
+        window.setTimeout(hide, 8000);
+    });
+
+    // 7. Phone Fields: Digits and Common Separators Only
+    document.querySelectorAll('input[type="tel"]').forEach((input) => {
+        input.addEventListener('input', () => {
+            const cleaned = input.value.replace(/[^0-9+() .-]/g, '');
+            if (cleaned !== input.value) {
+                input.value = cleaned;
+            }
+        });
+    });
 });
