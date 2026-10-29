@@ -56,8 +56,17 @@ class ContactController extends Controller
         try {
             Mail::to(config('services.contact.to_address'))->send(new ContactInquiryMail($inquiry));
         } catch (\Throwable $e) {
+            // The database is ephemeral, so log the full submission to make
+            // sure a failed delivery does not lose the lead.
             Log::error('Contact inquiry email failed', [
                 'inquiry_id' => $inquiry->id,
+                'name' => $inquiry->name,
+                'email' => $inquiry->email,
+                'phone' => $inquiry->phone,
+                'service' => $inquiry->service,
+                'message' => $inquiry->message,
+                'page_source' => $inquiry->page_source,
+                'ip_address' => $inquiry->ip_address,
                 'error' => $e->getMessage(),
             ]);
         }

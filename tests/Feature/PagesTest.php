@@ -93,6 +93,35 @@ class PagesTest extends TestCase
         ];
     }
 
+    public function test_sitemap_lists_indexable_pages(): void
+    {
+        $response = $this->get('/sitemap.xml');
+
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'application/xml; charset=UTF-8');
+        $response->assertSee('<loc>http://localhost/</loc>', false);
+        $response->assertSee('<loc>http://localhost/about-us/</loc>', false);
+        $response->assertSee('<loc>http://localhost/mobile-app-development/</loc>', false);
+        $response->assertDontSee('/mobile-marketing/', false);
+    }
+
+    #[DataProvider('legacySitemapProvider')]
+    public function test_legacy_wordpress_sitemaps_redirect(string $from): void
+    {
+        $response = $this->get($from);
+
+        $response->assertStatus(301);
+        $this->assertSame('/sitemap.xml', $response->headers->get('Location'));
+    }
+
+    public static function legacySitemapProvider(): array
+    {
+        return [
+            ['/sitemap_index.xml'],
+            ['/page-sitemap.xml'],
+        ];
+    }
+
     public function test_contact_form_submission_via_json(): void
     {
         $response = $this->postJson(route('contact.submit'), [

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +56,11 @@ Route::get('/mobile-app-development', [PageController::class, 'mobileAppDevelopm
 
 // Contact / Inquiry Submission
 Route::post('/contact-submit', [ContactController::class, 'submit'])->name('contact.submit');
+
+// Sitemap
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/sitemap_index.xml', fn () => redirect()->away('/sitemap.xml', 301));
+Route::get('/page-sitemap.xml', fn () => redirect()->away('/sitemap.xml', 301));
 
 // Fallback & Legacy WordPress Redirects
 Route::get('/index.php/{slug?}', function ($slug = null) {
