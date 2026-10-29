@@ -37,6 +37,13 @@ class EnsureTrailingSlash
             );
         }
 
+        // Legacy homepage alias (/home and /index.php/home).
+        if ($path === '/home') {
+            $queryString = $request->getQueryString();
+
+            return redirect()->away('/'.($queryString ? '?'.$queryString : ''), 301);
+        }
+
         // Skip root URL
         if ($path === '/' || $path === '') {
             return $next($request);
