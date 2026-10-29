@@ -54,7 +54,7 @@ class ContactController extends Controller
         ]);
 
         try {
-            Mail::to(config('services.contact.to_address'))->send(new ContactInquiryMail($inquiry));
+            Mail::to(config('services.contact.to_addresses'))->send(new ContactInquiryMail($inquiry));
         } catch (\Throwable $e) {
             // The database is ephemeral, so log the full submission to make
             // sure a failed delivery does not lose the lead.

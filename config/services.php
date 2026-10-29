@@ -23,7 +23,11 @@ return [
     ],
 
     'contact' => [
-        'to_address' => env('CONTACT_TO_ADDRESS', 'marketing@mirchmedia.com'),
+        // Comma-separated so the inquiry can go to several inboxes.
+        'to_addresses' => array_values(array_filter(array_map('trim', explode(
+            ',',
+            (string) env('CONTACT_TO_ADDRESS', 'marketing@mirchmedia.com,vivek@mirchmedia.com,hello@mirchmedia.com'),
+        )))),
         'from_address' => env('CONTACT_FROM_ADDRESS', 'noreply@mail.sprintmediadesign.com'),
     ],
 

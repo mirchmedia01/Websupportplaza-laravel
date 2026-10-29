@@ -11,7 +11,7 @@ class ContactSubmissionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_contact_submission_notifies_marketing_inbox(): void
+    public function test_contact_submission_notifies_team_inboxes(): void
     {
         Mail::fake();
 
@@ -29,6 +29,8 @@ class ContactSubmissionTest extends TestCase
 
         Mail::assertSent(ContactInquiryMail::class, function (ContactInquiryMail $mail): bool {
             return $mail->hasTo('marketing@mirchmedia.com')
+                && $mail->hasTo('vivek@mirchmedia.com')
+                && $mail->hasTo('hello@mirchmedia.com')
                 && $mail->inquiry->email === 'jane@example.com';
         });
     }
